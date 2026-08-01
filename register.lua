@@ -1,7 +1,7 @@
 --PLAYER KILLED BY PLAYER
 local deaths = {
     function(player, punchername, itemdesc)
-        return player .. " has been killed by " .. punchername .. " with " .. itemdesc .. "."
+        return punchername .. "'s " .. itemdesc .. " has slain " .. player .. "."
     end,
     function(player, punchername, itemdesc)
         return player .. " has been slain by " .. punchername .. " using " .. itemdesc .. "."
@@ -36,12 +36,18 @@ local deaths = {
     function(player)
         return player .. " has fallen to their death."
     end,
+    --by LadyK
     function(player)
-        return player .. " has been slain by gravity."
+        return player .. " has successfuly discovered the floor was right where they left it."
     end,
+    --by LadyK
     function(player)
-        return player .. " has been murdered by a fall."
+        return "The fall didn't kill " .. player .. ", but the sudden stop at the end did."
     end,
+    --by momhd
+    function(player)
+        return player .. " has realized they were not in a beacon's radius."
+    end
 }
 
 for _, func in ipairs(deaths) do
@@ -52,12 +58,6 @@ end
 local deaths = {
     function(player, nodename)
         return player .. " has been killed by a " .. nodename .. "."
-    end,
-    function(player, nodename)
-        return player .. " has been slain by a " .. nodename .. "."
-    end,
-    function(player, nodename)
-        return player .. " has been murdered by a " .. nodename .. "."
     end,
 }
 
@@ -81,6 +81,26 @@ local deaths = {
 for _, func in ipairs(deaths) do
     announce_deaths.register_drown_death(func)
 end
+
+--PLAYER ATTACKING WITH ITEMS(CUSTOM)
+local punchmessages = {
+    [1] = function(player, punchername)
+        return punchername .. "has punched " .. player .. " one too many times."
+    end,
+    [2] = function(player, punchername, itemdesc)
+        return player .. " has been beat to death by " .. punchername .. "."
+    end,
+    [3] = function(player, punchername, itemdesc)
+        return player .. " has been murdered by " .. punchername .. "."
+    end,
+}
+
+function announce_deaths.randompunchmessage(player, punchername, itemdesc)
+    return punchmessages[math.random(#punchmessages)](player, punchername, itemdesc)
+end
+
+announce_deaths.register_custom_item_punch_death("", announce_deaths.randompunchmessage)
+
 --NODE DAMAGE(CUSTOM)
 --burn messages
 local burnmessages = {

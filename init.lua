@@ -96,7 +96,7 @@ announce_deaths.deathmessages = {
         if customreasons[customreason] then
             return customreasons[customreason](player, reason)
         else
-            return player .. " has died"
+            return player .. " has evaporated"
         end
     end,
 }
