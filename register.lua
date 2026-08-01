@@ -85,7 +85,7 @@ end
 --PLAYER ATTACKING WITH ITEMS(CUSTOM)
 local punchmessages = {
     [1] = function(player, punchername)
-        return punchername .. "has punched " .. player .. " one too many times."
+        return punchername .. " has punched " .. player .. " one too many times."
     end,
     [2] = function(player, punchername, itemdesc)
         return player .. " has been beat to death by " .. punchername .. "."
